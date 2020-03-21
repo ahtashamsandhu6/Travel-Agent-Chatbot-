@@ -1,30 +1,6 @@
 import os, sys
 from flask import Flask, request
-from wit import Wit
 from pymessenger import Bot
-
-
-
-access_token = "E64TH2ZX2EXC6VN26ORIZRD6LQ3VHYA4"
-
-client = Wit(access_token = access_token)
-# message_text = "i want sport news "
-
-def wit_response(message_text):
-    resp = client.message(message_text)
-    entity = None
-    value = None
-
-    try:
-        entity = List(resp['entities'])[0]
-        value = resp['entities'][entity][0]['value']
-
-    except:
-        pass
-
-    return (entity, value)
-
-
 
 app = Flask(__name__)
 
@@ -62,21 +38,8 @@ def webhook():
                     else:
                         messaging_text = "no text"
 
-                    response = None
-
-                    entity, value = wit_response(messaging_text)
-
-                    if entity == 'newstype':
-                        response = 'Ok i am sending you {} news'.format(str(value))
-
-                    elif entity == 'location':
-                        response = 'Ok, you live in {0}. i will send you top headlines from {0}'.format(str(value))
-
-                    if response == 'None':
-                        response = "Sorry, i didn't understand!"
-
                     # ECHO
-                    # response = messaging_text
+                    response = messaging_text
                     bot.send_text_message(sender_id, response)
                     
     return "ok", 200
