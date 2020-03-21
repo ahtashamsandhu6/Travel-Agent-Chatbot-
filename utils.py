@@ -6,7 +6,7 @@ client = Wit(access_token = access_token)
 # message_text = "i want sport news "
 
 def wit_response(message_text):
-    response = client.message(message_text)
+    resp = client.message(message_text)
     entity = None
     value = None
 
