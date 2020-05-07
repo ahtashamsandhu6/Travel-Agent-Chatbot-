@@ -40,7 +40,7 @@ def verify():
 
 
 @app.route('/', methods=['POST'])
-def webhook():
+def webhook(store_departure_city):
 
     # this print statement checks what input has been placed by the user. It is here for debugging purposes only.
     print(request.data)
