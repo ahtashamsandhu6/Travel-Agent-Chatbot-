@@ -17,13 +17,8 @@ fb_api = "https://graph.facebook.com/v6.0/me/messages"
 profile_api = "https://graph.facebook.com/v6.0/me/messenger_profile"
 # this is a generic link for facebook graph API. It is useless as it is. I have concetenated links with it to use for myself in the code.
 psid_url = "https://graph.facebook.com/"
- 
-store_departure_city = ''
-destination_city = ''
-date = ''
-ticket_type = ''
-ticket_class = ''
-
+departure_city = ""
+destination_city = ""
 carousel_json = {"message":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title":"Lahore to Istanbul US$1,426 ","image_url":"https://aromatravel.com/wp-content/uploads/2015/05/PIA.jpg","subtitle":"→ Thu 30 Apr, 15:50 • 21h (2 stops)\n← Sun 10 May, 11:30 • 12h (1 stop)"},{"title":"Freelancing","image_url":"https://i.ibb.co/WgphLjx/freelance.jpg","subtitle":"This section will tell you the scope of Freelancing after any course\n👇👇👇","buttons":[{"type":"postback","title":"Scope of Courses?","payload":"freelance.scope"},{"type":"postback","title":"How can I get Work?","payload":"freelance.work"},{"type":"postback","title":"Do you Offer Jobs?","payload":"freelance.jobs"}]}]}}}}
 
 
@@ -41,7 +36,6 @@ def verify():
 
 @app.route('/', methods=['POST'])
 def webhook():
-
     # this print statement checks what input has been placed by the user. It is here for debugging purposes only.
     print(request.data)
 
@@ -65,7 +59,12 @@ def webhook():
                 user_json = json.loads(response.content)
                 user_name = user_json["name"]
 
-                
+                departure_city = ''
+                destination_city = ''
+                date = ''
+                ticket_type = ''
+                ticket_class = ''
+
                 if messaging_event.get('postback'):
 
                     # Handling get_started response
@@ -92,9 +91,7 @@ def webhook():
                             ticket_class = messaging_event['message']['quick_reply'].get('payload')
                             requests.post(fb_api, params=token_dict,json={"recipient": {"id": sender_id}, "messaging_type": "RESPONSE","message": {"attachment": {"type": "image", "payload": {"url": "https://www.freevector.com/uploads/vector/preview/18653/CartoonAirplane_01_Preview.jpg","is_reusable": True}}}})
                             requests.post(fb_api, params=token_dict, json={"message": {"text": "⌛🙂 I’m looking for the best prices now and will be back in a moment!"},"recipient": {"id": sender_id},"notification_type": "REGULAR","messaging_type": "RESPONSE"})
-                            # requests.post(fb_api, params=token_dict, json={"recipient":{"id":sender_id},"message":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title": "'" + departure_city + " to " + destination_city + "PKR 20,000" + "'","image_url":"https://aromatravel.com/wp-content/uploads/2015/05/PIA.jpg","subtitle":"→ Thu 30 Apr, 15:50 • 21h (2 stops)\n← Sun 10 May, 11:30 • 12h (1 stop)"}]}}}})
-                            
-                            requests.post(fb_api, params=token_dict, json={"recipient":{"id":sender_id},"message":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title": "Lahore to Islamabad PKR 20,000","image_url":"https://aromatravel.com/wp-content/uploads/2015/05/PIA.jpg","subtitle":"→ Thu 30 Apr, 15:50 • 21h (2 stops)\n← Sun 10 May, 11:30 • 12h (1 stop)"}]}}}})
+                            requests.post(fb_api, params=token_dict, json={"recipient":{"id":sender_id},"message":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title":"Lahore to Istanbul US$1,426 ","image_url":"https://aromatravel.com/wp-content/uploads/2015/05/PIA.jpg","subtitle":"→ Thu 30 Apr, 15:50 • 21h (2 stops)\n← Sun 10 May, 11:30 • 12h (1 stop)"}]}}}})
                             return "ok", 200
                     elif messaging_event['message'].get('text'):
                         if re.search("[a-zA-Z]+ +[0-9]",messaging_event['message'].get('text')):
