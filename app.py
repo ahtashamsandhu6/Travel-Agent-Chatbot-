@@ -17,8 +17,13 @@ fb_api = "https://graph.facebook.com/v6.0/me/messages"
 profile_api = "https://graph.facebook.com/v6.0/me/messenger_profile"
 # this is a generic link for facebook graph API. It is useless as it is. I have concetenated links with it to use for myself in the code.
 psid_url = "https://graph.facebook.com/"
-departure_city = ""
-destination_city = ""
+
+departure_city = ''
+destination_city = ''
+date = ''
+ticket_type = ''
+ticket_class = ''
+
 carousel_json = {"message":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title":"Lahore to Istanbul US$1,426 ","image_url":"https://aromatravel.com/wp-content/uploads/2015/05/PIA.jpg","subtitle":"→ Thu 30 Apr, 15:50 • 21h (2 stops)\n← Sun 10 May, 11:30 • 12h (1 stop)"},{"title":"Freelancing","image_url":"https://i.ibb.co/WgphLjx/freelance.jpg","subtitle":"This section will tell you the scope of Freelancing after any course\n👇👇👇","buttons":[{"type":"postback","title":"Scope of Courses?","payload":"freelance.scope"},{"type":"postback","title":"How can I get Work?","payload":"freelance.work"},{"type":"postback","title":"Do you Offer Jobs?","payload":"freelance.jobs"}]}]}}}}
 
 
@@ -59,12 +64,7 @@ def webhook():
                 user_json = json.loads(response.content)
                 user_name = user_json["name"]
 
-                departure_city = ''
-                destination_city = ''
-                date = ''
-                ticket_type = ''
-                ticket_class = ''
-
+                
                 if messaging_event.get('postback'):
 
                     # Handling get_started response
