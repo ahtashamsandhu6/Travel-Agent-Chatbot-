@@ -18,7 +18,7 @@ profile_api = "https://graph.facebook.com/v6.0/me/messenger_profile"
 # this is a generic link for facebook graph API. It is useless as it is. I have concetenated links with it to use for myself in the code.
 psid_url = "https://graph.facebook.com/"
  
-departure_city = ''
+# departure_city = ''
 destination_city = ''
 date = ''
 ticket_type = ''
@@ -41,6 +41,8 @@ def verify():
 
 @app.route('/', methods=['POST'])
 def webhook():
+    departure_city = ''
+
     # this print statement checks what input has been placed by the user. It is here for debugging purposes only.
     print(request.data)
 
