@@ -2,13 +2,13 @@
 import os, sys, requests, json, re
 from flask import Flask, request, jsonify
 
-from pymessenger import Bot
+
 
 app = Flask(__name__)
 
 PAGE_ACCESS_TOKEN = "EAAn77QeHlcMBAPN2ARPqZAxXtbEJUjLNE1vDkxitksxeuRIq8DixWsUUx4YrsZBVrOSnrKQPzauZBeZBMKlTEeVI7dAB7L81Ujfrk9eQgYSAngg4ylZB5r0PEZBdEMyaXcaGY2zoSouaxrn34aFM3ZBSNBu5URiqRu9uCEPRrHctml0ZA7ToZCyy0ZBvb9VycVcF4ZD"
 
-bot = Bot(PAGE_ACCESS_TOKEN)
+
 
 token_dict = {"access_token": PAGE_ACCESS_TOKEN}
 # to send message, quick replies and galleries etc. we call the facebook graph messages API.
@@ -22,7 +22,7 @@ destination_city = ""
 carousel_json = {"message":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title":"Lahore to Istanbul US$1,426 ","image_url":"https://aromatravel.com/wp-content/uploads/2015/05/PIA.jpg","subtitle":"→ Thu 30 Apr, 15:50 • 21h (2 stops)\n← Sun 10 May, 11:30 • 12h (1 stop)"},{"title":"Freelancing","image_url":"https://i.ibb.co/WgphLjx/freelance.jpg","subtitle":"This section will tell you the scope of Freelancing after any course\n👇👇👇","buttons":[{"type":"postback","title":"Scope of Courses?","payload":"freelance.scope"},{"type":"postback","title":"How can I get Work?","payload":"freelance.work"},{"type":"postback","title":"Do you Offer Jobs?","payload":"freelance.jobs"}]}]}}}}
 
 
-welcome_message = "Get Started clicked.\nASSALAM-U-ALAIKUM 🙂\n\n"
+welcome_message = "ASSALAM-U-ALAIKUM 🙂\n\n"
 
 @app.route('/', methods=['GET'])
 def verify():
@@ -59,6 +59,11 @@ def webhook():
                 user_json = json.loads(response.content)
                 user_name = user_json["name"]
 
+                departure_city = ''
+                destination_city = ''
+                date = ''
+                ticket_type = ''
+                ticket_class = ''
 
                 if messaging_event.get('postback'):
 
@@ -86,7 +91,7 @@ def webhook():
                             ticket_class = messaging_event['message']['quick_reply'].get('payload')
                             requests.post(fb_api, params=token_dict,json={"recipient": {"id": sender_id}, "messaging_type": "RESPONSE","message": {"attachment": {"type": "image", "payload": {"url": "https://www.freevector.com/uploads/vector/preview/18653/CartoonAirplane_01_Preview.jpg","is_reusable": True}}}})
                             requests.post(fb_api, params=token_dict, json={"message": {"text": "⌛🙂 I’m looking for the best prices now and will be back in a moment!"},"recipient": {"id": sender_id},"notification_type": "REGULAR","messaging_type": "RESPONSE"})
-                            requests.post(fb_api, params=token_dict, json={"recipient":{"id":sender_id},"message":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title":"Lahore to Istanbul US$1,426 ","image_url":"https://aromatravel.com/wp-content/uploads/2015/05/PIA.jpg","subtitle":"→ Thu 30 Apr, 15:50 • 21h (2 stops)\n← Sun 10 May, 11:30 • 12h (1 stop)"},{"title":"Freelancing","image_url":"https://i.ibb.co/WgphLjx/freelance.jpg","subtitle":"This section will tell you the scope of Freelancing after any course\n👇👇👇","buttons":[{"type":"postback","title":"Scope of Courses?","payload":"freelance.scope"},{"type":"postback","title":"How can I get Work?","payload":"freelance.work"},{"type":"postback","title":"Do you Offer Jobs?","payload":"freelance.jobs"}]}]}}}})
+                            requests.post(fb_api, params=token_dict, json={"recipient":{"id":sender_id},"message":{"attachment":{"type":"template","payload":{"template_type":"generic","elements":[{"title": departure_city + " to " + destination_city + "PKR 20,000","image_url":"https://aromatravel.com/wp-content/uploads/2015/05/PIA.jpg","subtitle":"→ Thu 30 Apr, 15:50 • 21h (2 stops)\n← Sun 10 May, 11:30 • 12h (1 stop)"}]}}}})
                             return "ok", 200
                     elif messaging_event['message'].get('text'):
                         if re.search("[a-zA-Z]+ +[0-9]",messaging_event['message'].get('text')):
