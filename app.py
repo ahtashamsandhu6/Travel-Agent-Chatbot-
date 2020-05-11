@@ -76,15 +76,6 @@ def scraping_script(sender_id):
     
     # sleep(5)
 
-    flight_details = "flightno: 123 \n dep city: lahore \n arr city: manchester \n stops: non stop \n price: 21228"
-
-    requests.post(fb_api, params=token_dict, json={"message": {"text": flight_details},"recipient": {"id": sender_id},"notification_type": "REGULAR","messaging_type": "RESPONSE"})
-
-    requests.post(fb_api, params=token_dict,json={"recipient": {"id": sender_id}, "message":{"attachment":{"type":"template","payload":{"template_type":"button","text": "What do you want to do now? ", "buttons": [{"type": "web_url","url": "https://www.google.com","title": "Book Now"},{"type":"postback","payload":"Search Again","title":"Search Again"}]}}}})
-
-
-    return "ok", 200
-
 @app.route('/', methods=['POST'])
 
 def webhook():
