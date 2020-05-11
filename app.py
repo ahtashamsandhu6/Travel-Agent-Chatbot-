@@ -4,15 +4,15 @@ from flask import Flask, request, jsonify
 
 # Scraping_Script Start
 
-from selenium import webdriver
-import sys
-from time import sleep
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait as wait
+# from selenium import webdriver
+# import sys
+# from time import sleep
+# from selenium.webdriver.common.keys import Keys
+# from selenium.webdriver.common.action_chains import ActionChains
+# from selenium.webdriver.support.ui import Select
+# from selenium.webdriver.support import expected_conditions as EC
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.support.ui import WebDriverWait as wait
 
 open_browser = True
 
