@@ -246,7 +246,7 @@ def webhook():
                             myresult = my_cursor.fetchall()
 
                             try: 
-                                # departure_city = myresult[0][1]
+                                departure_city = myresult[0][1]
 
                                 title  = dep + " to " + arr 
                                 requests.post(fb_api, params=token_dict, json={"recipient":{"id":sender_id},"sender_action":"typing_on"})

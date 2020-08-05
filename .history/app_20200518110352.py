@@ -105,7 +105,7 @@ def webhook():
                         dep = user_entered_info[0]
                         arr = user_entered_info[1]
                         # date = user_entered_info[2]
-                        # t_type = user_entered_info[3]
+                        t_type = user_entered_info[3]
                         f.close()
 
                         f = open(sender_id + ".txt", "r")
@@ -246,7 +246,7 @@ def webhook():
                             myresult = my_cursor.fetchall()
 
                             try: 
-                                # departure_city = myresult[0][1]
+                                departure_city = myresult[0][1]
 
                                 title  = dep + " to " + arr 
                                 requests.post(fb_api, params=token_dict, json={"recipient":{"id":sender_id},"sender_action":"typing_on"})
